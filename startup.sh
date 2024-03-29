@@ -4,21 +4,6 @@
 # All the programs are called with their needed arguments
 # Author: Félix MARQUET
 
-# Fonction pour surveiller la fermeture de l'IHM
-monitor_ihm() {
-    while pgrep -x "ihm" > /dev/null; do
-        sleep 1
-    done
-    # Une fois l'IHM fermée, tuer tous les autres programmes
-    killall tcp-server
-    killall lidar
-    killall camera
-    echo "All programs terminated."
-}
-
-# Démarrer la fonction de surveillance en arrière-plan
-monitor_ihm &
-
 # Démarrer le serveur TCP
 echo "Starting the TCP server"
 /home/modelec/serge/tcp-server &
@@ -36,6 +21,21 @@ echo "Starting the camera"
 # Démarrer l'IHM
 echo "Starting the IHM"
 /home/modelec/serge/ihm fullscreen &
+
+# Fonction pour surveiller la fermeture de l'IHM
+monitor_ihm() {
+    while pgrep -x "ihm" > /dev/null; do
+        sleep 1
+    done
+    # Une fois l'IHM fermée, tuer tous les autres programmes
+    killall tcp-server
+    killall lidar
+    killall camera
+    echo "All programs terminated."
+}
+
+# Démarrer la fonction de surveillance en arrière-plan
+monitor_ihm &
 
 # Attendre que tous les programmes se terminent
 wait
