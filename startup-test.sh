@@ -39,3 +39,7 @@ monitor_ihm &
 
 # Attendre que tous les programmes se terminent
 wait
+
+# Retourner à la position de départ
+echo "Put SERGE back in the starting position"
+/mnt/win/Users/BreizhHardware/Nextcloud/Programation/C++/Modelec/Initialisation/test/test5.sh

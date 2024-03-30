@@ -39,3 +39,7 @@ monitor_ihm &
 
 # Attendre que tous les programmes se terminent
 wait
+
+# Retourner à la position de départ
+echo "Put SERGE back in the starting position"
+/home/modelec/serge/starting-position
