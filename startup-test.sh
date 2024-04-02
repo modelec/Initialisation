@@ -17,25 +17,32 @@ sleep 1
 # Démarrer la caméra
 echo "Starting the camera"
 /mnt/win/Users/BreizhHardware/Nextcloud/Programation/C++/Modelec/Initialisation/test/test3.sh &
+sleep 1
 
 # Démarrer l'IHM
 echo "Starting the IHM"
 /mnt/win/Users/BreizhHardware/Nextcloud/Programation/C++/Modelec/Initialisation/test/test4.sh fullscreen &
 
-# Fonction pour surveiller la fermeture de l'IHM
-monitor_ihm() {
-    while pgrep -x "test4.sh" > /dev/null; do
-        sleep 1
+# Fonction pour surveiller la fermeture de tous les programmes
+monitor_all() {
+    local pids=$(pgrep -d ' ' -f "test1|test2|test3|test4")
+    
+    # Attendre que l'un des programmes se termine
+    wait $pids
+    
+    # Terminer tous les autres programmes
+    for pid in $pids; do
+        if ps -p $pid > /dev/null; then
+            echo "Program with PID $pid has terminated, stopping other programs"
+            pkill -P $$ -f "test1|test2|test3|test4"
+            break
+        fi
     done
-    # Une fois l'IHM fermée, tuer tous les autres programmes
-    killall test1.sh
-    killall test2.sh
-    killall test3.sh
-    echo "All programs terminated."
+    echo "All programs have terminated"
 }
 
 # Démarrer la fonction de surveillance en arrière-plan
-monitor_ihm &
+monitor_all &
 
 # Attendre que tous les programmes se terminent
 wait
