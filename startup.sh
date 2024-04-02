@@ -23,19 +23,25 @@ echo "Starting the IHM"
 /home/modelec/serge/ihm fullscreen &
 
 # Fonction pour surveiller la fermeture de l'IHM
-monitor_ihm() {
-    while pgrep -x "ihm" > /dev/null; do
-        sleep 1
+monitor_all() {
+    local pids=$(pgrep -d ' ' -f "tcp-server|lidar|camera|ihm")
+    
+    # Attendre que l'un des programmes se termine
+    wait $pids
+    
+    # Terminer tous les autres programmes
+    for pid in $pids; do
+        if ps -p $pid > /dev/null; then
+            echo "Program with PID $pid has terminated, stopping other programs"
+            pkill -P $$ -f "tcp-server|lidar|camera|ihm"
+            break
+        fi
     done
-    # Une fois l'IHM fermée, tuer tous les autres programmes
-    killall tcp-server
-    killall lidar
-    killall camera
-    echo "All programs terminated."
+    echo "All programs have terminated"
 }
 
 # Démarrer la fonction de surveillance en arrière-plan
-monitor_ihm &
+monitor_all &
 
 # Attendre que tous les programmes se terminent
 wait
