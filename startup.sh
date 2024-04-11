@@ -16,9 +16,10 @@ sleep 1
 
 # Démarrer le Lidar
 echo "Starting the Lidar"
-/home/modelec/Serge/detection_adversaire/build/lidar &
+screen -dmS lidar /home/modelec/Serge/detection_adversaire/build/lidar
+pid=$(screen -ls | grep -o '[0-9]*\.lidar' | grep -o '[0-9]*')
 echo "Lidar pid" $! > /home/modelec/Serge/Lidar_pid.txt
-pids+=($!)
+pids+=($pid)
 sleep 1
 
 # Démarrer l'IHM
@@ -38,23 +39,26 @@ sleep 1
 
 # Démarrer le programme d'interconnexion raspi -> arduino
 echo "Starting the interconnection program"
-/home/modelec/Serge/connectors/build/connectors &
+screen -dmS connectors /home/modelec/Serge/connectors/build/connectors
+pid=$(screen -ls | grep -o '[0-9]*\.connectors' | grep -o '[0-9]*')
 echo "Interconnection pid" $! > /home/modelec/Serge/Interconnection_pid.txt
-pids+=($!)
+pids+=($pid)
 sleep 1
 
 # Démarrer le programme de contrôle des servomoteurs
 echo "Starting the servomotor control program"
-/home/modelec/Serge/servo_moteurs/build/servo_motor &
+screen -dmS servo_motor /home/modelec/Serge/servo_moteurs/build/servo_motor
+pid=$(screen -ls | grep -o '[0-9]*\.servo_motor' | grep -o '[0-9]*')
 echo "Servomotor pid" $! > /home/modelec/Serge/Servomotor_pid.txt
-pids+=($!)
+pids+=($pid)
 sleep 1
 
 # Démarrer le programme de la tirette
 echo "Starting the tirette program"
-/home/modelec/Serge/tirette/tirette &
+screen -dmS tirette /home/modelec/Serge/tirette/tirette
+pid=$(screen -ls | grep -o '[0-9]*\.tirette' | grep -o '[0-9]*')
 echo "Tirette pid" $! > /home/modelec/Serge/Tirette_pid.txt
-pids+=($!)
+pids+=($pid)
 sleep 1
 
 
@@ -67,6 +71,7 @@ monitor_all() {
                 echo "Program with PID $pid has terminated, stopping other programs"
                 pkill -P $$ -f "lidar|arucoDetector|ihm_robot|connectors|servo_motor|tirette"
                 sleep 1
+                echo "Stopping the TCP server"
                 pkill -P $$ -f "socketServer"
                 return
             fi
