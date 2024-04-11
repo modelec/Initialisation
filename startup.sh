@@ -65,7 +65,7 @@ monitor_all() {
         for pid in "${pids[@]}"; do
             if ! kill -0 $pid 2>/dev/null; then
                 echo "Program with PID $pid has terminated, stopping other programs"
-                pkill -P $$ -f "lidar|arucoDetector|ihm_robot"
+                pkill -P $$ -f "lidar|arucoDetector|ihm_robot|connectors|servo_motor|tirette"
                 sleep 1
                 pkill -P $$ -f "socketServer"
                 return
