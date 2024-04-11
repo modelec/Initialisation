@@ -10,24 +10,28 @@ pids=()
 # Démarrer le serveur TCP
 echo "Starting the TCP server"
 /home/modelec/Serge/TCPSocketServer/build/socketServer &
+echo "TCP server pid" $! >> /home/modelec/Serge/TCP_pid.txt
 pids+=($!)
 sleep 1
 
 # Démarrer le Lidar
 echo "Starting the Lidar"
 /home/modelec/Serge/detection_adversaire/build/lidar &
+echo "Lidar pid" $! >> /home/modelec/Serge/Lidar_pid.txt
 pids+=($!)
 sleep 1
 
 # Démarrer la caméra
 echo "Starting the camera"
 /home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml 8080 --headless &
+echo "Camera pid" $! >> /home/modelec/Serge/Camera_pid.txt
 pids+=($!)
 sleep 1
 
 # Démarrer l'IHM
 echo "Starting the IHM"
 /home/modelec/Serge/ihm/build/ihm_robot fullscreen &
+echo "IHM pid" $! >> /home/modelec/Serge/IHM_pid.txt
 pids+=($!)
 
 # Fonction pour surveiller la fermeture de l'IHM
