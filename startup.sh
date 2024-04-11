@@ -17,9 +17,9 @@ sleep 1
 # Démarrer le Lidar
 echo "Starting the Lidar"
 screen -dmS lidar /home/modelec/Serge/detection_adversaire/build/lidar
-pid=$(screen -ls | grep -o '[0-9]*\.lidar' | grep -o '[0-9]*')
-echo "Lidar pid" $! > /home/modelec/Serge/Lidar_pid.txt
-pids+=($pid)
+pidLidar=$(screen -ls | grep -o '[0-9]*\.lidar' | grep -o '[0-9]*')
+echo "Lidar pid" $pidLidar > /home/modelec/Serge/Lidar_pid.txt
+pids+=($pidLidar)
 sleep 1
 
 # Démarrer l'IHM
@@ -32,8 +32,8 @@ sleep 1
 # Démarrer la caméra
 echo "Starting the camera"
 screen -dmS camera /home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml 8080 --headless
-pid=$(screen -ls | grep -o '[0-9]*\.camera' | grep -o '[0-9]*')
-echo "Camera pid" $pid > /home/modelec/Serge/Camera_pid.txt
+pidCam=$(screen -ls | grep -o '[0-9]*\.camera' | grep -o '[0-9]*')
+echo "Camera pid" $pidCam > /home/modelec/Serge/Camera_pid.txt
 pids+=($pid)
 sleep 1
 
@@ -41,7 +41,7 @@ sleep 1
 echo "Starting the interconnection program"
 screen -dmS connectors /home/modelec/Serge/connectors/build/connectors
 pid=$(screen -ls | grep -o '[0-9]*\.connectors' | grep -o '[0-9]*')
-echo "Interconnection pid" $! > /home/modelec/Serge/Interconnection_pid.txt
+echo "Interconnection pid" $pid > /home/modelec/Serge/Interconnection_pid.txt
 pids+=($pid)
 sleep 1
 
@@ -49,7 +49,7 @@ sleep 1
 echo "Starting the servomotor control program"
 screen -dmS servo_motor /home/modelec/Serge/servo_moteurs/build/servo_motor
 pid=$(screen -ls | grep -o '[0-9]*\.servo_motor' | grep -o '[0-9]*')
-echo "Servomotor pid" $! > /home/modelec/Serge/Servomotor_pid.txt
+echo "Servomotor pid" $pid > /home/modelec/Serge/Servomotor_pid.txt
 pids+=($pid)
 sleep 1
 
@@ -57,7 +57,7 @@ sleep 1
 echo "Starting the tirette program"
 screen -dmS tirette /home/modelec/Serge/tirette/tirette
 pid=$(screen -ls | grep -o '[0-9]*\.tirette' | grep -o '[0-9]*')
-echo "Tirette pid" $! > /home/modelec/Serge/Tirette_pid.txt
+echo "Tirette pid" $pid > /home/modelec/Serge/Tirette_pid.txt
 pids+=($pid)
 sleep 1
 
