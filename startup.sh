@@ -72,7 +72,8 @@ monitor_all() {
                 for other_pid in "${pids[@]}"; do
                     if [ "$other_pid" != "$pid" ]; then
                         if ps -p $other_pid -o comm= | grep -q "camera"; then
-                            screen -S camera -X quit
+                            screen_pid=$(ps -ef | grep "SCREEN -dmS camera" | grep -v grep | awk '{print $2}')
+                            kill -SIGKILL $screen_pid 2>/dev/null
                             continue
                         fi
                         kill -SIGKILL $other_pid 2>/dev/null
