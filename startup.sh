@@ -35,7 +35,7 @@ echo "Starting the camera"
 screen -dmS camera /home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml 8080 --headless
 pidCam=$(screen -ls | grep -o '[0-9]*\.camera' | grep -o '[0-9]*')
 echo "Camera pid" $pidCam > /home/modelec/Serge/Camera_pid.txt
-pids+=($pid)
+pids+=($pidCam)
 sleep 1
 
 # Démarrer le programme d'interconnexion raspi -> arduino
