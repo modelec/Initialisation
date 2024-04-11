@@ -4,37 +4,41 @@
 # All the programs are called with their needed arguments
 # Author: Félix MARQUET
 
+# Stocker les PIDs des programmes en arrière-plan dans une array
+pids=()
+
 # Démarrer le serveur TCP
 echo "Starting the TCP server"
 /home/modelec/Serge/TCPSocketServer/build/socketServer &
+pids+=($!)
 sleep 1
 
 # Démarrer le Lidar
 echo "Starting the Lidar"
 /home/modelec/Serge/detection_adversaire/build/lidar &
+pids+=($!)
 sleep 1
 
 # Démarrer la caméra
 echo "Starting the camera"
 /home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml 8080 --headless &
+pids+=($!)
 sleep 1
 
 # Démarrer l'IHM
 echo "Starting the IHM"
 /home/modelec/Serge/ihm/build/ihm_robot fullscreen &
+pids+=($!)
 
 # Fonction pour surveiller la fermeture de l'IHM
 monitor_all() {
-    local pids=$(pgrep -d ' ' -f "socketServer|lidar|arucoDetector|ihm_robot")
-    
-    # Attendre que l'un des programmes se termine
-    wait $pids
-    
-    # Terminer tous les autres programmes
-    for pid in $pids; do
-        if ps -p $pid > /dev/null; then
+    # Wait for any of the background processes to exit
+    for pid in "${pids[@]}"; do
+        if wait $pid; then
             echo "Program with PID $pid has terminated, stopping other programs"
-            pkill -P $$ -f "socketServer|lidar|arucoDetector|ihm_robot"
+            pkill -P $$ -f "lidar|arucoDetector|ihm_robot"
+            sleep 1
+            pkill -p $$ -f "socketServer"
             break
         fi
     done
