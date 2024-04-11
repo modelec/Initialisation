@@ -36,7 +36,7 @@ monitor_all() {
             echo "Program with PID $pid has terminated, stopping other programs"
             pkill -P $$ -f "lidar|arucoDetector|ihm_robot"
             sleep 1
-            pkill -P && -f "socketServer"
+            pkill -P $$ -f "socketServer"
             break
         fi
     done
