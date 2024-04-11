@@ -10,21 +10,21 @@ pids=()
 # Démarrer le serveur TCP
 echo "Starting the TCP server"
 /home/modelec/Serge/TCPSocketServer/build/socketServer &
-echo "TCP server pid" $! >> /home/modelec/Serge/TCP_pid.txt
+echo "TCP server pid" $! > /home/modelec/Serge/TCP_pid.txt
 pids+=($!)
 sleep 1
 
 # Démarrer le Lidar
 echo "Starting the Lidar"
 /home/modelec/Serge/detection_adversaire/build/lidar &
-echo "Lidar pid" $! >> /home/modelec/Serge/Lidar_pid.txt
+echo "Lidar pid" $! > /home/modelec/Serge/Lidar_pid.txt
 pids+=($!)
 sleep 1
 
 # Démarrer l'IHM
 echo "Starting the IHM"
 /home/modelec/Serge/ihm/build/ihm_robot fullscreen &
-echo "IHM pid" $! >> /home/modelec/Serge/IHM_pid.txt
+echo "IHM pid" $! > /home/modelec/Serge/IHM_pid.txt
 pids+=($!)
 sleep 1
 
@@ -32,28 +32,28 @@ sleep 1
 echo "Starting the camera"
 screen -dmS camera /home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml 8080 --headless
 pid=$(screen -ls | grep -o '[0-9]*\.camera' | grep -o '[0-9]*')
-echo "Camera pid" $pid >> /home/modelec/Serge/Camera_pid.txt
+echo "Camera pid" $pid > /home/modelec/Serge/Camera_pid.txt
 pids+=($pid)
 sleep 1
 
 # Démarrer le programme d'interconnexion raspi -> arduino
 echo "Starting the interconnection program"
 /home/modelec/Serge/connectors/build/connectors &
-echo "Interconnection pid" $! >> /home/modelec/Serge/Interconnection_pid.txt
+echo "Interconnection pid" $! > /home/modelec/Serge/Interconnection_pid.txt
 pids+=($!)
 sleep 1
 
 # Démarrer le programme de contrôle des servomoteurs
 echo "Starting the servomotor control program"
 /home/modelec/Serge/servo_moteurs/build/servo_motor &
-echo "Servomotor pid" $! >> /home/modelec/Serge/Servomotor_pid.txt
+echo "Servomotor pid" $! > /home/modelec/Serge/Servomotor_pid.txt
 pids+=($!)
 sleep 1
 
 # Démarrer le programme de la tirette
 echo "Starting the tirette program"
 /home/modelec/Serge/tirette/tirette &
-echo "Tirette pid" $! >> /home/modelec/Serge/Tirette_pid.txt
+echo "Tirette pid" $! > /home/modelec/Serge/Tirette_pid.txt
 pids+=($!)
 sleep 1
 
