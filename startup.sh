@@ -62,7 +62,6 @@ echo "Tirette pid" $pid > /home/modelec/Serge/Tirette_pid.txt
 pids+=($pid)
 sleep 1
 
-
 # Fonction pour surveiller la fermeture de l'IHM
 monitor_all() {
     while true; do
@@ -72,7 +71,8 @@ monitor_all() {
                 echo "Program with PID $pid has terminated, stopping other programs"
                 for other_pid in "${pids[@]}"; do
                     if [ "$other_pid" != "$pid" ]; then
-                        if ps -p $other_pid -o comm= | grep -q "socketServer"; then
+                        if ps -p $other_pid -o comm= | grep -q "camera"; then
+                            screen -S camera -X quit
                             continue
                         fi
                         kill -SIGKILL $other_pid 2>/dev/null
