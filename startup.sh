@@ -100,4 +100,6 @@ wait
 echo "Put SERGE back in the starting position"
 /home/modelec/Serge/starting-position
 
+sleep 2
+
 screen -wipe
