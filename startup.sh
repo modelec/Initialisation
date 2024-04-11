@@ -32,9 +32,9 @@ pids+=($!)
 
 # Fonction pour surveiller la fermeture de l'IHM
 monitor_all() {
-    # Terminer tous les autres programmes
-    for pid in $pids; do
-        if ps -p $pid > /dev/null; then
+    # Attendre que un des programmes se termine
+    for pid in "${pids[@]}"; do
+        if wait $pid; then
             echo "Program with PID $pid has terminated, stopping other programs"
             pkill -P $$ -f "lidar|arucoDetector|ihm_robot"
             sleep 1
