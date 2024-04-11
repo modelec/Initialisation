@@ -36,6 +36,27 @@ echo "Camera pid" $pid >> /home/modelec/Serge/Camera_pid.txt
 pids+=($pid)
 sleep 1
 
+# Démarrer le programme d'interconnexion raspi -> arduino
+echo "Starting the interconnection program"
+/home/modelec/Serge/connectors/build/connectors &
+echo "Interconnection pid" $! >> /home/modelec/Serge/Interconnection_pid.txt
+pids+=($!)
+sleep 1
+
+# Démarrer le programme de contrôle des servomoteurs
+echo "Starting the servomotor control program"
+/home/modelec/Serge/servo_moteurs/build/servo_motor &
+echo "Servomotor pid" $! >> /home/modelec/Serge/Servomotor_pid.txt
+pids+=($!)
+sleep 1
+
+# Démarrer le programme de la tirette
+echo "Starting the tirette program"
+/home/modelec/Serge/tirette/tirette &
+echo "Tirette pid" $! >> /home/modelec/Serge/Tirette_pid.txt
+pids+=($!)
+sleep 1
+
 
 # Fonction pour surveiller la fermeture de l'IHM
 monitor_all() {
