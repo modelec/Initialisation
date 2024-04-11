@@ -23,9 +23,10 @@ sleep 1
 
 # Démarrer la caméra
 echo "Starting the camera"
-/home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml 8080 --headless &
-echo "Camera pid" $! >> /home/modelec/Serge/Camera_pid.txt
-pids+=($!)
+screen -dmS camera /home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml 8080 --headless
+pid=$(screen -ls | grep -o '[0-9]*\.camera' | grep -o '[0-9]*')
+echo "Camera pid" $pid >> /home/modelec/Serge/Camera_pid.txt
+pids+=($pid)
 sleep 1
 
 # Démarrer l'IHM
@@ -33,6 +34,7 @@ echo "Starting the IHM"
 /home/modelec/Serge/ihm/build/ihm_robot fullscreen &
 echo "IHM pid" $! >> /home/modelec/Serge/IHM_pid.txt
 pids+=($!)
+sleep 10
 
 # Fonction pour surveiller la fermeture de l'IHM
 monitor_all() {
