@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 # Bash script for start up all the programs for SERGE
 # All programs are started in the background and in parallel
 # All the programs are called with their needed arguments
@@ -32,13 +32,13 @@ pids+=($!)
 
 # Fonction pour surveiller la fermeture de l'IHM
 monitor_all() {
-    # Wait for any of the background processes to exit
-    for pid in "${pids[@]}"; do
-        if wait $pid; then
+    # Terminer tous les autres programmes
+    for pid in $pids; do
+        if ps -p $pid > /dev/null; then
             echo "Program with PID $pid has terminated, stopping other programs"
             pkill -P $$ -f "lidar|arucoDetector|ihm_robot"
             sleep 1
-            pkill -p $$ -f "socketServer"
+            pkill -P $$ -f "socketServer"
             break
         fi
     done
