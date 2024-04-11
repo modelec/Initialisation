@@ -6,12 +6,13 @@
 
 # Stocker les PIDs des programmes en arrière-plan dans une array
 pids=()
+pidserver=()
 
 # Démarrer le serveur TCP
 echo "Starting the TCP server"
 /home/modelec/Serge/TCPSocketServer/build/socketServer &
 echo "TCP server pid" $! > /home/modelec/Serge/TCP_pid.txt
-pids+=($!)
+pidserver+=($!)
 sleep 1
 
 # Démarrer le Lidar
@@ -69,10 +70,18 @@ monitor_all() {
         for pid in "${pids[@]}"; do
             if ! kill -0 $pid 2>/dev/null; then
                 echo "Program with PID $pid has terminated, stopping other programs"
-                pkill -P $$ -f "lidar|arucoDetector|ihm_robot|connectors|servo_motor|tirette"
-                sleep 1
+                for other_pid in "${pids[@]}"; do
+                    if [ "$other_pid" != "$pid" ]; then
+                        if ps -p $other_pid -o comm= | grep -q "socketServer"; then
+                            continue
+                        fi
+                        kill -SIGKILL $other_pid 2>/dev/null
+                    fi
+                done
                 echo "Stopping the TCP server"
-                pkill -P $$ -f "socketServer"
+                for server_pid in "${pidserver[@]}"; do
+                    kill -SIGKILL $server_pid 2>/dev/null
+                done
                 return
             fi
         done
