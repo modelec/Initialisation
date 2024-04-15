@@ -8,16 +8,22 @@
 pids=()
 pidserver=()
 
+if [ -z "$1" ]; then
+    port=8080
+else
+    port="$1"
+fi
+
 # Démarrer le serveur TCP
 echo "Starting the TCP server"
-/home/modelec/Serge/TCPSocketServer/build/socketServer &
+/home/modelec/Serge/TCPSocketServer/build/socketServer $port &
 echo "TCP server pid" $! > /home/modelec/Serge/TCP_pid.txt
 pidserver+=($!)
 sleep 1
 
 # Démarrer le Lidar
 echo "Starting the Lidar"
-screen -dmS lidar /home/modelec/Serge/detection_adversaire/build/lidar
+screen -dmS lidar /home/modelec/Serge/detection_adversaire/build/lidar $port
 pidLidar=$(screen -ls | grep -o '[0-9]*\.lidar' | grep -o '[0-9]*')
 echo "Lidar pid" $pidLidar > /home/modelec/Serge/Lidar_pid.txt
 pids+=($pidLidar)
@@ -25,14 +31,14 @@ sleep 1
 
 # Démarrer l'IHM
 echo "Starting the IHM"
-/home/modelec/Serge/ihm/build/ihm_robot fullscreen &
+/home/modelec/Serge/ihm/build/ihm_robot fullscreen $port &
 echo "IHM pid" $! > /home/modelec/Serge/IHM_pid.txt
 pids+=($!)
 sleep 1
 
 # Démarrer la caméra
 echo "Starting the camera"
-screen -dmS camera /home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml 8080 --headless
+screen -dmS camera /home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml $port --headless
 pidCam=$(screen -ls | grep -o '[0-9]*\.camera' | grep -o '[0-9]*')
 echo "Camera pid" $pidCam > /home/modelec/Serge/Camera_pid.txt
 pids+=($pidCam)
@@ -40,7 +46,7 @@ sleep 1
 
 # Démarrer le programme d'interconnexion raspi -> arduino
 echo "Starting the interconnection program"
-screen -dmS connectors /home/modelec/Serge/connectors/build/connectors
+screen -dmS connectors /home/modelec/Serge/connectors/build/connectors $port
 pid=$(screen -ls | grep -o '[0-9]*\.connectors' | grep -o '[0-9]*')
 echo "Interconnection pid" $pid > /home/modelec/Serge/Interconnection_pid.txt
 pids+=($pid)
@@ -48,7 +54,7 @@ sleep 1
 
 # Démarrer le programme de contrôle des servomoteurs
 echo "Starting the servomotor control program"
-screen -dmS servo_motor /home/modelec/Serge/servo_moteurs/build/servo_motor
+screen -dmS servo_motor /home/modelec/Serge/servo_moteurs/build/servo_motor $port
 pid=$(screen -ls | grep -o '[0-9]*\.servo_motor' | grep -o '[0-9]*')
 echo "Servomotor pid" $pid > /home/modelec/Serge/Servomotor_pid.txt
 pids+=($pid)
@@ -56,7 +62,7 @@ sleep 1
 
 # Démarrer le programme de la tirette
 echo "Starting the tirette program"
-screen -dmS tirette /home/modelec/Serge/tirette/tirette
+screen -dmS tirette /home/modelec/Serge/tirette/tirette $port
 pid=$(screen -ls | grep -o '[0-9]*\.tirette' | grep -o '[0-9]*')
 echo "Tirette pid" $pid > /home/modelec/Serge/Tirette_pid.txt
 pids+=($pid)
