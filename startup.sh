@@ -108,4 +108,4 @@ sleep 1
 
 # Retourner à la position de départ
 echo "Put SERGE back in the starting position"
-/home/modelec/Serge/emergency/build/emergency /home/modelec/Serge/TCPSocketServer/build/end_point.txt &
+/home/modelec/Serge/emergency/build/emergency ./end_point.txt &
