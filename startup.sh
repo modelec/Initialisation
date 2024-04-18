@@ -31,7 +31,7 @@ sleep 1
 
 # Démarrer l'IHM
 echo "Starting the IHM"
-/home/modelec/Serge/ihm/build/ihm_robot fullscreen $port & > /home/modelec/Serge/Logs/ihm_robot.log
+/home/modelec/Serge/ihm/build/ihm_robot fullscreen $port &
 echo "IHM pid" $! > /home/modelec/Serge/IHM_pid.txt
 pids+=($!)
 sleep 1
@@ -69,6 +69,7 @@ pids+=($pid)
 sleep 1
 
 echo "Starting the client logger program"
+rm /home/modelec/Serge/Logs/client.log
 /home/modelec/Serge/TCPSocketClient/example/build/client $port > /home/modelec/Serge/Logs/client.log &
 echo "Client Logger pid" $! > /home/modelec/Serge/client_pid.txt
 pids+=($!)
