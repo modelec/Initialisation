@@ -29,6 +29,14 @@ echo "Lidar pid" $pidLidar > /home/modelec/Serge/Lidar_pid.txt
 pids+=($pidLidar)
 sleep 1
 
+# Démarrer l'estimation de point
+echo "Starting the estimation"
+screen -dmS estimation /home/modelec/Serge/estimation/build/estimation $port
+pidEstimation=$(screen -ls | grep -o '[0-9]*\.estimation' | grep -o '[0-9]*')
+echo "estimation pid" $pidEstimation > /home/modelec/Serge/estimation_pid.txt
+pids+=($pidEstimation)
+sleep 1
+
 # Démarrer l'IHM
 echo "Starting the IHM"
 /home/modelec/Serge/ihm/build/ihm_robot fullscreen $port &
