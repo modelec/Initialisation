@@ -98,15 +98,15 @@ monitor_all() {
                     if [ "$other_pid" != "$pid" ]; then
                         if ps -p $other_pid -o comm= | grep -q "camera"; then
                             screen_pid=$(ps -ef | grep "SCREEN -dmS camera" | grep -v grep | awk '{print $2}')
-                            kill -SIGINT $screen_pid 2>/dev/null
+                            kill -SIGKILL $screen_pid 2>/dev/null
                             continue
                         fi
-                        kill -SIGINT $other_pid 2>/dev/null
+                        kill -SIGKILL $other_pid 2>/dev/null
                     fi
                 done
                 echo "Stopping the TCP server"
                 for server_pid in "${pidserver[@]}"; do
-                    kill -SIGINT $server_pid 2>/dev/null
+                    kill -SIGKILL $server_pid 2>/dev/null
                 done
                 return
             fi
