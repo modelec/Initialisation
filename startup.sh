@@ -16,7 +16,7 @@ fi
 
 # Démarrer le serveur TCP
 echo "Starting the TCP server"
-/home/modelec/Serge/TCPSocketServer/build/socketServer "$port" > /home/modelec/Serge/Logs/socketServer.log &
+/home/modelec/Serge/TCPSocketServer/build/socketServer "$port" &
 echo "TCP server pid" $! > /home/modelec/Serge/TCP_pid.txt
 pidserver+=($!)
 sleep 1
