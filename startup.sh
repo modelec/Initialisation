@@ -72,7 +72,7 @@ echo "Starting the client logger program"
 rm /home/modelec/Serge/Logs/client.log
 # while true; do
     echo "$(date +'%Y-%m-%d %H:%M:%S') - Starting the client logger program" >> /home/modelec/Serge/Logs/client.log
-    /home/modelec/Serge/TCPSocketClient/example/build/client $port >> /home/modelec/Serge/Logs/client.log 2>&1 &
+    /home/modelec/Serge/TCPSocketClient/example/build/client $port logger >> /home/modelec/Serge/Logs/client.log 2>&1 &
     sleep 1
 # done
 echo "Client Logger pid" $! > /home/modelec/Serge/client_pid.txt
