@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Update of the Initialization script
-echo "Updating the Initialization script"
-rm /home/modelec/Serge/Initialisation/startup.sh && cd /home/modelec/Serge/Initialisation && git pull && chmod 777 startup.sh
-echo "Initialization script updated"
-
 # Update of the TCP server
 echo "Updating the TCP server"
 cd /home/modelec/Serge/TCPSocketServer && git pull && cd build && cmake .. && make 
@@ -51,3 +46,4 @@ cd /home/modelec/Serge/tirette && git pull && g++ main.cpp MyClient.cpp MyClient
 echo "Tirette updated"
 
 echo "All repositories have been updated, Please check the logs for any errors"
+echo "Please update Initialisation manually using git pull"
