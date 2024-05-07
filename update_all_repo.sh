@@ -4,10 +4,10 @@
 rm /home/modelec/Serge/Initialisation/startup.sh && cd /home/modelec/Serge/Initialisation && git pull && chmod 777 startup.sh
 
 # Update of the TCP server
-cd /home/modelec/Serge/TCPSocketClient && git pull && cd build && cmake .. && make
+cd /home/modelec/Serge/TCPSocketClient && git pull && cd build && cmake .. && make 
 
 # Update of the TCP Client
-cd /home/modelec/Serge/TCPSocketServer && git pull && cd build && cmake .. && make
+cd /home/modelec/Serge/TCPSocketServer && git pull && cd build && cmake .. && sudo make install 
 
 # Update of the connectors
 cd /home/modelec/Serge/connectors && git pull && cd build && cmake .. && make
