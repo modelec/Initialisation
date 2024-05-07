@@ -7,12 +7,12 @@ echo "Initialization script updated"
 
 # Update of the TCP server
 echo "Updating the TCP server"
-cd /home/modelec/Serge/TCPSocketClient && git pull && cd build && cmake .. && make 
+cd /home/modelec/Serge/TCPSocketServer && git pull && cd build && cmake .. && make 
 echo "TCP server updated"
 
 # Update of the TCP Client
 echo "Updating the TCP client"
-cd /home/modelec/Serge/TCPSocketServer && git pull && cd build && cmake .. && sudo make install 
+cd /home/modelec/Serge/TCPSocketClient && git pull && cd build && cmake .. && sudo make install 
 echo "TCP client updated"
 
 # Update of the connectors
