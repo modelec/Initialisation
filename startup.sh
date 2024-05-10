@@ -38,15 +38,6 @@ echo "IHM pid" $! > /home/modelec/Serge/IHM_pid.txt
 pids+=($!)
 sleep 1
 
-# Démarrer la caméra
-echo "Starting the camera"
-rm /home/modelec/Serge/Logs/camera.log
-screen -L -Logfile /home/modelec/Serge/Logs/camera.log -dmS camera /home/modelec/Serge/detection_pot/build/arucoDetector /home/modelec/Serge/detection_pot/build/camera_calibration.yml "$port" --headless
-pidCam=$(screen -ls | grep -o '[0-9]*\.camera' | grep -o '[0-9]*')
-echo "Camera pid" "$pidCam" > /home/modelec/Serge/Camera_pid.txt
-pids+=($pidCam)
-sleep 1
-
 # Démarrer le programme d'interconnexion raspi -> arduino
 echo "Starting the interconnection program"
 rm /home/modelec/Serge/Logs/connectos.log
