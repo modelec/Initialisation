@@ -90,6 +90,16 @@ monitor_all() {
                             kill -SIGKILL $screen_pid 2>/dev/null
                             continue
                         fi
+                        # Si le programme est 'connectors', envoyer SIGINT au lieu de SIGKILL
+                        if ps -p $other_pid -o comm= | grep -q "connectors"; then
+                            kill -SIGINT $other_pid 2>/dev/null
+                            continue
+                        fi
+                        # Si le programme est 'lidar', envoyer SIGINT au lieu de SIGKILL
+                        if ps -p $other_pid -o comm= | grep -q "lidar"; then
+                            kill -SIGINT $other_pid 2>/dev/null
+                            continue
+                        fi
                         kill -SIGKILL $other_pid 2>/dev/null
                     fi
                 done
