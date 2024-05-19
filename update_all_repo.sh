@@ -7,7 +7,7 @@ echo "TCP server updated"
 
 # Update of the TCP Client
 echo "Updating the TCP client"
-cd /home/modelec/Serge/TCPSocketClient && git pull && cd build && cmake .. && sudo make install 
+cd /home/modelec/Serge/cpp-lib && git pull && cd build && cmake .. && sudo make && sudo make install
 echo "TCP client updated"
 
 # Update of the connectors
@@ -42,7 +42,7 @@ echo "Servo moteur updated"
 
 # Update of the tirette
 echo "Updating the tirette"
-cd /home/modelec/Serge/tirette && git pull && g++ main.cpp MyClient.cpp MyClient.h -o tirette -l wiringPi -l TCPSocket
+cd /home/modelec/Serge/tirette && git pull && g++ main.cpp MyClient.cpp MyClient.h -o tirette -l wiringPi -l Modelec
 echo "Tirette updated"
 
 echo "All repositories have been updated, Please check the logs for any errors"
