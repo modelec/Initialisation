@@ -56,15 +56,6 @@ echo "Servomotor pid" $pid > /home/modelec/Serge/Servomotor_pid.txt
 pids+=($pid)
 sleep 1
 
-# Démarrer le programme de contrôle des servomoteurs
-echo "Starting the GameController"
-rm /home/modelec/Serge/Logs/gc.log
-screen -L -Logfile /home/modelec/Serge/Logs/gc.log -dmS gc /home/modelec/Serge/GameController/build/GameController --port "$port"
-pid=$(screen -ls | grep -o '[0-9]*\.gc' | grep -o '[0-9]*')
-echo "Servomotor pid" $pid > /home/modelec/Serge/GC.txt
-pids+=($pid)
-sleep 1
-
 echo "Starting the client logger program"
 rm /home/modelec/Serge/Logs/client.log
 echo "$(date +'%Y-%m-%d %H:%M:%S') - Starting the client logger program" >> /home/modelec/Serge/Logs/client.log
