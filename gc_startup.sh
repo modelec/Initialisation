@@ -82,17 +82,7 @@ monitor_all() {
                 echo "Program with PID $pid has terminated, stopping other programs"
                 for other_pid in "${pids[@]}"; do
                     if [ "$other_pid" != "$pid" ]; then
-                        # Si le programme est 'connectors', envoyer SIGINT au lieu de SIGKILL
-                        if ps -p $other_pid -o comm= | grep -q "connectors"; then
-                            kill -SIGINT $other_pid 2>/dev/null
-                            continue
-                        fi
-                        # Si le programme est 'lidar', envoyer SIGINT au lieu de SIGKILL
-                        if ps -p $other_pid -o comm= | grep -q "lidar"; then
-                            kill -SIGINT $other_pid 2>/dev/null
-                            continue
-                        fi
-                        kill -SIGKILL $other_pid 2>/dev/null
+                        kill -SIGINT $other_pid 2>/dev/null
                     fi
                 done
                 echo "Stopping the TCP server"
