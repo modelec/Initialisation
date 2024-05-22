@@ -33,7 +33,7 @@ sleep 1
 # Démarrer l'IHM
 echo "Starting the IHM"
 rm /home/modelec/Serge/Logs/ihm_robot.log
-/home/modelec/Serge/ihm/build/ihm_robot --window_mode fullscreen --port "$port" > /home/modelec/Serge/Logs/ihm_robot.log &
+/home/modelec/Serge/ihm/build/ihm_robot --window-mode fullscreen --port "$port" > /home/modelec/Serge/Logs/ihm_robot.log &
 echo "IHM pid" $! > /home/modelec/Serge/IHM_pid.txt
 pids+=($!)
 sleep 1
