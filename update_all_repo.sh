@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# Update of the TCP server
-echo "Updating the TCP server"
-cd /home/modelec/Serge/TCPSocketServer && git pull && cd build && cmake .. && make 
-echo "TCP server updated"
+# Update Server TCP
+echo "Upadting TCP Server"
+cd /home/modelec/Serge/TCPSocketServer/build && git pull && cmake .. && make
+cd /home/modelec/Serge/TCPSocketServerGC/build && git pull && cmake .. && make
+echo "Server updated"
 
 # Update of the TCP Client
 echo "Updating the TCP client"
 cd /home/modelec/Serge/cpp-lib && git pull && cd build && cmake .. && sudo make && sudo make install
-echo "TCP client updated"
+cd /home/modelec/Serge/cpp-lib/example/build && cmake .. && make
+echo "Lib updated"
 
 # Update of the connectors
 echo "Updating the connectors"
